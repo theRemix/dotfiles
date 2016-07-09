@@ -34,12 +34,14 @@ filetype indent on
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" Hide tabline
-set showtabline=0
+" For Haxe autocompletions
+:set autowrite
 
 " Fast editing of vimrc
-map <leader>e :e! ~/.vimrc<cr>
+" map <leader>e :e! ~/.vimrc<cr>
 
+" Don't show mode since Airline does
+set noshowmode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => COLORS AND FONTS
@@ -93,7 +95,10 @@ else
   set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
-"Always show current position
+" Disable scratch preview for autocomplete
+set completeopt-=preview
+
+" Always show current position
 set ruler
 
 " Height of the command bar
@@ -150,14 +155,16 @@ set guioptions-=l
 set guioptions-=L
 
 " Set highlight cursor line
-hi CursorLine cterm=none ctermbg=8 ctermfg=none
+hi CursorLine cterm=none ctermbg=16 ctermfg=none
 
 " Style verticle split seporator
 hi VertSplit cterm=none ctermbg=none ctermfg=23
 
 " Change selected text bg color
-hi Visual cterm=none ctermbg=11 ctermfg=none
+hi Visual cterm=none ctermbg=9 ctermfg=none
 
+" Paste in visual mode without updating default register
+vnoremap p "_c<Esc>p
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => FILES, BACKUPS, AND UNDO
@@ -269,16 +276,20 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
+" Show tabline
+set showtabline=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => ACK FOR SEARCHING
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 " Ack after the selected text
-vnoremap <leader>ack :call VisualSelection('gv', '')<CR>
+" vnoremap <leader>ack :call VisualSelection('gv', '')<CR>
+vnoremap <leader>agg :call VisualSelection('gv', '')<CR>
 
 " Open Ack and put the cursor in the right position
-map <leader>ac :Ack
+" map <leader>ac :Ack
+map <leader>ag :Ag
 
 " Search and replace the selected text
 vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -357,12 +368,13 @@ vnoremap $q <esc>`>a'<esc>`<i'<esc>
 vnoremap $e <esc>`>a"<esc>`<i"<esc>
 
 " Auto complete (, ", ', [
-inoremap ( ()<esc>i
-inoremap [ []<esc>i
-inoremap { {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
+"   Replaced with Auto Pairs
+" inoremap ( ()<esc>i
+" inoremap [ []<esc>i
+" inoremap { {}<esc>i
+" inoremap $4 {<esc>o}<esc>O
+" inoremap $q ''<esc>i
+" inoremap $e ""<esc>i
 
 " Set Syntax
 map <leader>sy :set syntax=
@@ -371,15 +383,23 @@ map <leader>sy :set syntax=
 map <leader>qq :q<cr>
 
 " Quick file reload
-map <leader>r :e<cr>
+map <leader>e :e<cr>
+
+" Quick buffers reload
+map <leader>r :bufdo e<cr>
 
 " Quick Open Notes
-let g:notes = '~/Desktop/Notes/'
+let g:notes_folder = '~/Documents/vim-notes/'
 let g:note_size = 15
+
+" Open global notes
+let g:global_notes = g:notes_folder . 'global-notes.md'
+map <leader>nn :execute ':topleft split ' . g:global_notes<cr>:execute ':resize' . g:note_size<cr>
+
+" Project specific notes
+let g:notes = g:notes_folder . fnamemodify(getcwd(), ':t') . '.md'
+" Open current project notes
 map <leader>n :execute ':topleft split ' . g:notes<cr>:execute ':resize' . g:note_size<cr>
-" Open daily notes
-let g:daily_notes = '~/Desktop/Notes/daily-notes.md'
-map <leader>nn :execute ':topleft split ' . g:daily_notes<cr>:execute ':resize' . g:note_size<cr>
 
 " Toggle quotes for json file
 map <leader>" :call ConcealJsonToggle()<cr>
@@ -397,6 +417,11 @@ vnoremap <leader>d "_d
 " Quick macro invocation with q register
 nnoremap Q @q
 
+" Switch between the last two files
+nnoremap <leader><leader> <C-^>
+
+" Trigger build with make
+map <leader>m :make<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS

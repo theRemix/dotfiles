@@ -11,13 +11,16 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Plug 'ctrlpvim/ctrlp.vim'
 
 " Unite. The interface to rule almost everything
-Plug 'Shougo/unite.vim'
+" Plug 'Shougo/unite.vim'
 
 " Most Recently Used
-Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/neomru.vim'
 
 " Neo-completion with cache
-Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
+
+" Code completion
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 
 " Emacs's kill-ring for vim
 " Plug 'maxbrunsfeld/vim-yankstack'
@@ -26,7 +29,13 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'mattn/emmet-vim'
 
 " Vim frontend for the Perl module Ack
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'
+
+" Silver searcher
+Plug 'rking/ag.vim'
+
+" Edit every file in a quickfix list at the same time using ag
+Plug 'Olical/vim-enmasse'
 
 " BufExplorer quickly and easily switch between buffer
 Plug 'jlanzarotta/bufexplorer'
@@ -43,8 +52,9 @@ Plug 'scrooloose/syntastic'
 " Cache file automatically
 Plug 'MarcWeber/vim-addon-mw-utils'
 
-" Lean & mean status/tabline 
-Plug 'bling/vim-airline'
+" Lean & mean status/tabline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Comment stuff out
 Plug 'tpope/vim-commentary'
@@ -52,14 +62,14 @@ Plug 'tpope/vim-commentary'
 " Visually select larger regions of text using the same key combination
 Plug 'terryma/vim-expand-region'
 
-" Git wrapper 
+" Git wrapper
 Plug 'tpope/vim-fugitive'
 
 " LESS syntax highlighting
-Plug 'groenewege/vim-less'
+" Plug 'groenewege/vim-less'
 
 " SCSS syntax highlighting
-Plug 'cakebaker/scss-syntax.vim'
+" Plug 'cakebaker/scss-syntax.vim'
 
 " Markdown syntax highlighting
 Plug 'plasticboy/vim-markdown'
@@ -67,8 +77,11 @@ Plug 'plasticboy/vim-markdown'
 " Enable repeating supported plugin maps
 Plug 'tpope/vim-repeat'
 
-" Ultimate snippet solution 
+" Ultimate snippet solution
 Plug 'SirVer/ultisnips'
+
+" Elixir
+Plug 'elixir-lang/vim-elixir'
 
 " Quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
@@ -83,7 +96,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'leafgarland/typescript-vim'
 
 " Undo history visualizer
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' } 
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " Preview colors in source code
 Plug 'ap/vim-css-color'
@@ -93,6 +106,7 @@ Plug 'hail2u/vim-css3-syntax'
 
 " Vim Workspace Controller
 Plug 'szw/vim-ctrlspace'
+" let g:ctrlspace_default_mapping_key = '<C-@>'
 
 " Vim motions on speed
 Plug 'easymotion/vim-easymotion'
@@ -101,6 +115,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 
 " Instant Markdown previews
+" Requires npm -g install instant-markdown-d
 Plug 'suan/vim-instant-markdown'
 
 " Jade syntax highlighting
@@ -112,6 +127,9 @@ Plug 'pangloss/vim-javascript'
 " Enhanced javascript syntax
 Plug 'jelera/vim-javascript-syntax'
 
+" JSX support
+Plug 'mxw/vim-jsx'
+
 " Sublime Text style multiple selections
 Plug 'terryma/vim-multiple-cursors'
 
@@ -119,7 +137,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'mustache/vim-mustache-handlebars'
 
 " Paste in Vim with indentation adjusted to destination context
-Plug 'sickill/vim-pasta'
+" Plug 'sickill/vim-pasta'
 
 " Toggle, display and navigate marks
 Plug 'kshenoy/vim-signature'
@@ -138,6 +156,36 @@ Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 
 " Gotham colorscheme
 Plug 'whatyouhide/vim-gotham'
+
+" Haxe plugin
+Plug 'jdonaldson/vaxe'
+
+" Ctrl SF
+Plug 'dyng/ctrlsf.vim'
+
+" Auto Pairs
+Plug 'jiangmiao/auto-pairs'
+
+" Vim Go
+Plug 'fatih/vim-go'
+
+" Vim Erlang
+Plug 'vim-erlang/vim-erlang-runtime'
+
+" Vim TaskWarrior
+Plug 'blindFS/vim-taskwarrior'
+
+" Vim CoffeeScript
+Plug 'kchmck/vim-coffee-script'
+
+" Elm-Vim
+Plug 'elmcast/elm-vim'
+
+" Vim Brunch
+Plug 'drichard/vim-brunch'
+
+" Vim HardTim
+Plug 'takac/vim-hardtime'
 
 call plug#end()
 
@@ -168,53 +216,53 @@ let MRU_Max_Entries = 400
 """"""""""""""""""""""""""""""
 
 " Use the fuzzy matcher for everything
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#converter_default#use(['converter_relative_word'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#source('file_mru,file_rec,file_rec/async', 'converters', 'converter_relative_word')
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#converter_default#use(['converter_relative_word'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#custom#source('file_mru,file_rec,file_rec/async', 'converters', 'converter_relative_word')
 
-call unite#custom#profile('default', 'context', {
-  \ 'cursor_line_highlight' : 'CursorLine', 
-  \ 'start_insert': 1,
-  \ 'winheight': 10,
-  \ 'direction': 'botright',
-  \ })
+" call unite#custom#profile('default', 'context', {
+"   \ 'cursor_line_highlight' : 'CursorLine',
+"   \ 'start_insert': 1,
+"   \ 'winheight': 10,
+"   \ 'direction': 'botright',
+"   \ })
 
 " Set up some custom ignores
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-  \ 'ignore_pattern', join([
-  \ '\.git/',
-  \ 'tmp/',
-  \ '.sass-cache',
-  \ 'node_modules/',
-  \ 'bower_components/',
-  \ 'dist/',
-  \ '.pyc',
-  \ ], '\|'))
+" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+"   \ 'ignore_pattern', join([
+"   \ '\.git/',
+"   \ 'tmp/',
+"   \ '.sass-cache',
+"   \ 'node_modules/',
+"   \ 'bower_components/',
+"   \ 'dist/',
+"   \ '.pyc',
+"   \ ], '\|'))
 
-let g:unite_data_directory='~/.vim/.cache/unite'
-let g:unite_source_history_yank_enable=1
-let g:unite_source_rec_max_cache_files=5000
-let g:unite_source_file_mru_limit=200
-let g:unite_source_rec_async_command='ag --nocolor --nogroup --hidden -g ""'
-let g:unite_source_grep_command = 'ack'
-let g:unite_source_grep_default_opts = '-s -H --nocolor --nogroup --column'
-let g:unite_source_grep_recursive_opt = ''
-let g:unite_prompt='❯ '
+" let g:unite_data_directory='~/.vim/.cache/unite'
+" let g:unite_source_history_yank_enable=1
+" let g:unite_source_rec_max_cache_files=5000
+" let g:unite_source_file_mru_limit=200
+" let g:unite_source_rec_async_command='ag --nocolor --nogroup --hidden -g ""'
+" let g:unite_source_grep_command = 'ack'
+" let g:unite_source_grep_default_opts = '-s -H --nocolor --nogroup --column'
+" let g:unite_source_grep_recursive_opt = ''
+" let g:unite_prompt='❯ '
 
-nnoremap <C-f> :<C-u>Unite -buffer-name=files file_mru file_rec/async:!<CR>
-nnoremap <leader>f :<C-u>Unite -no-split -no-resize -direction=topleft -buffer-name=mru file_mru<CR>
-map <leader>y :<C-u>Unite -no-start-insert history/yank<CR>
-nnoremap <leader>/ :<C-u>Unite grep:.<CR> 
+" nnoremap <C-f> :<C-u>Unite -buffer-name=files file_mru file_rec/async:!<CR>
+" nnoremap <leader>f :<C-u>Unite -no-split -no-resize -direction=topleft -buffer-name=mru file_mru<CR>
+" map <leader>y :<C-u>Unite -no-start-insert history/yank<CR>
+" nnoremap <leader>/ :<C-u>Unite grep:.<CR>
 
 " Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_keymaps()
+" autocmd FileType unite call s:unite_keymaps()
 
-function! s:unite_keymaps()
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-endfunction
+" function! s:unite_keymaps()
+"   " Enable navigation with control-j and control-k in insert mode
+"   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+"   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+" endfunction
 
 
 """"""""""""""""""""""""""""""
@@ -246,8 +294,14 @@ endfunction
 let g:NERDTreeWinPos = "left"
 let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeWinSize=35
-map <C-e> :NERDTreeToggle<CR>
+map <C-d> :NERDTreeToggle<CR>
 
+""""""""""""""""""""""""""""""
+" Ultisnips
+""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<C-Space>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 
 """"""""""""""""""""""""""""""
 " vim-multiple-cursors
@@ -262,10 +316,18 @@ let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline_powerline_fonts = 1
 if has("gui_running")
   let g:airline_theme="luna"
-else 
-  let g:airline_theme="gotham"
+else
+  let g:airline_theme="molokai"
 endif
 
+" Automatically truncate sections
+let g:airline#extensions#default#section_truncate_width = {
+  \ 'b': 100,
+  \ 'x': 100,
+  \ 'y': 105,
+  \ 'z': 50,
+  \ 'warning': 50,
+  \ }
 
 """"""""""""""""""""""""""""""
 " yankstack
@@ -276,6 +338,15 @@ endif
 
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+
+""""""""""""""""""""""""""""""
+" YouCompleteMe
+""""""""""""""""""""""""""""""
+
+let g:ycm_semantic_triggers = {
+     \ 'elm' : ['.'],
+     \}
 
 
 """"""""""""""""""""""""""""""
@@ -298,35 +369,11 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 
 """"""""""""""""""""""""""""""
-" Neocomplete
-""""""""""""""""""""""""""""""
-
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-
-""""""""""""""""""""""""""""""
 " vim-fugitive
 """"""""""""""""""""""""""""""
 map <leader>gg :GitGutterToggle<CR>
 map <leader>gs :Gstatus<CR>
-set diffopt+=vertical 
+set diffopt+=vertical
 
 
 """"""""""""""""""""""""""""""
@@ -343,10 +390,16 @@ let g:vim_markdown_folding_disabled=1
 
 
 """"""""""""""""""""""""""""""
+" vim jsx
+""""""""""""""""""""""""""""""
+let g:jsx_ext_required = 0
+
+
+""""""""""""""""""""""""""""""
 " undotree
 """"""""""""""""""""""""""""""
 map <leader>u :UndotreeToggle<CR>
-let g:undotree_WindowLayout = 3 
+let g:undotree_WindowLayout = 3
 let g:undotree_SplitWidth = 35
 let g:undotree_SetFocusWhenToggle = 1
 
@@ -361,3 +414,28 @@ endif
 """"""""""""""""""""""""""""""
 nnoremap <silent> <leader>z :ZoomWin<cr>
 
+""""""""""""""""""""""""""""""
+" CtrlSF
+""""""""""""""""""""""""""""""
+" Prompt CtrlSF using ALT+f
+nmap ƒ <Plug>CtrlSFPrompt
+vmap ƒ <Plug>CtrlSFVwordPath
+
+" Toggle CtrlSF result display
+map † :CtrlSFToggle<CR>
+
+let g:ctrlsf_indent = 2
+
+""""""""""""""""""""""""""""""
+" HardTime
+""""""""""""""""""""""""""""""
+let g:hardtime_default_on = 0
+let g:list_of_normal_keys = ["h", "j", "k", "l", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_visual_keys = ["h", "j", "k", "l", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+" <UP> <DOWN> for autocomplete
+let g:list_of_insert_keys = ["<LEFT>", "<RIGHT>"]
+let g:list_of_disabled_keys = []
+let g:hardtime_showmsg = 1
+" let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_allow_different_key = 1
