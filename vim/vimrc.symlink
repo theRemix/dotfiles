@@ -5,6 +5,12 @@ set nocompatible
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 
+" treat _ as word stops
+" set iskeyword-=_
+
+" Search all files, e.g. node_modules/
+nnoremap <silent> <leader>af :call fzf#vim#files('',
+      \ {'source': 'ag -f -g "" -u', 'down': '40%'})<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => LOAD PLUGINS
@@ -386,7 +392,7 @@ map <leader>qq :q<cr>
 map <leader>e :e<cr>
 
 " Quick buffers reload
-map <leader>r :bufdo e<cr>
+" map <leader>r :bufdo e<cr>
 
 " Quick Open Notes
 let g:notes_folder = '~/Documents/vim-notes/'
@@ -414,6 +420,13 @@ vnoremap p "_c<Esc>p
 " Delete selected words without updating default register
 vnoremap <leader>d "_d
 
+" Saner behavior of n and N
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+
+" Search current word without moving cursor
+nnoremap<silent> K :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+
 " Quick macro invocation with q register
 nnoremap Q @q
 
@@ -423,9 +436,37 @@ nnoremap <leader><leader> <C-^>
 " Trigger build with make
 map <leader>m :make<cr>
 
+" Run JS with jsruntime.vim
+" vnoremap <silent> <leader>b :<C-U>echo javascript#runtime#evalScript(GetSelectedText())<cr>
+" vnoremap <silent> <leader>B :<C-U>call QuickShow( javascript#runtime#evalScript(GetSelectedText()))<cr>
+
+" vnoremap <silent> <leader>b :<C-U>echo javascript#runtime#evalScript(@*)<cr>
+" vnoremap <silent> <leader>b :call CmdLine('javascript#runtime#evalScript', '')
+
+nmap <C-t> :vs#<CR>
+
+" build go projects
+autocmd FileType go map <buffer> <leader>b :GoRun<CR>
+" test go projects
+autocmd FileType go map <buffer> <leader>B :GoTest<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => HELPER FUNCTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+
+func! QuickShow(str)
+  let l:output = a:str
+  lexpr l:output
+  laddexpr ""
+  lwindow
+endfunc
+
+func! GetSelectedText()
+  normal gv"xy
+  let result = getreg("x")
+  normal gv
+  return result
+endfunc
 
 function! CmdLine(str)
   exe "menu Foo.Bar :" . a:str

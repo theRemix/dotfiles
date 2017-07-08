@@ -20,7 +20,12 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " Plug 'Shougo/neocomplete.vim'
 
 " Code completion
+" BROKEN!
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+
+" Tab completing
+" Plug 'ajh17/VimCompletesMe'
+" Plug 'maxboisvert/vim-simple-complete'
 
 " Emacs's kill-ring for vim
 " Plug 'maxbrunsfeld/vim-yankstack'
@@ -33,6 +38,10 @@ Plug 'mattn/emmet-vim'
 
 " Silver searcher
 Plug 'rking/ag.vim'
+
+" Command-line fuzzy finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Edit every file in a quickfix list at the same time using ag
 Plug 'Olical/vim-enmasse'
@@ -187,6 +196,18 @@ Plug 'drichard/vim-brunch'
 " Vim HardTim
 Plug 'takac/vim-hardtime'
 
+" Vim graphql
+Plug 'jparise/vim-graphql'
+
+" Codi
+Plug 'metakirby5/codi.vim'
+
+" Systemd syntax
+Plug 'Matt-Deacalion/vim-systemd-syntax'
+
+" Vue syntax
+Plug 'posva/vim-vue'
+
 call plug#end()
 
 
@@ -289,11 +310,33 @@ let MRU_Max_Entries = 400
 
 
 """"""""""""""""""""""""""""""
+" FZF
+""""""""""""""""""""""""""""""
+let g:fzf_layout = { 'down': '40%' }
+" Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" Search project files, respecting git ignore
+nnoremap <silent> <C-f> :FZF<CR>
+" Search all files, e.g. node_modules/
+nnoremap <silent> <leader>af :call fzf#vim#files('',
+      \ {'source': 'ag --hidden --ignore .git -f -g "" -u', 'down': '40%'})<CR>
+" Search MRU buffers
+nnoremap <silent> <leader>f :Buffers<CR>
+nnoremap <silent> <leader>` :Marks<CR>
+
+" [Tags] Command to generate tags file
+" let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules --exclude=test'
+nnoremap <silent> <leader>t :Tags<CR>
+
+""""""""""""""""""""""""""""""
 " NERDTree
 """"""""""""""""""""""""""""""
 let g:NERDTreeWinPos = "left"
 let NERDTreeIgnore = ['\.js.map$', '\.DS_Store$']
 let g:NERDTreeWinSize=35
+let g:NERDTreeDirArrowExpandable = '✦'
+let g:NERDTreeDirArrowCollapsible = '✧'
 map <C-d> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""
@@ -344,9 +387,9 @@ let g:airline#extensions#default#section_truncate_width = {
 " YouCompleteMe
 """"""""""""""""""""""""""""""
 
-let g:ycm_semantic_triggers = {
-     \ 'elm' : ['.'],
-     \}
+" let g:ycm_semantic_triggers = {
+"      \ 'elm' : ['.'],
+"      \}
 
 
 """"""""""""""""""""""""""""""
@@ -418,11 +461,13 @@ nnoremap <silent> <leader>z :ZoomWin<cr>
 " CtrlSF
 """"""""""""""""""""""""""""""
 " Prompt CtrlSF using ALT+f
-nmap ƒ <Plug>CtrlSFPrompt
-vmap ƒ <Plug>CtrlSFVwordPath
+" nmap ƒ <Plug>CtrlSFPrompt
+" vmap ƒ <Plug>CtrlSFVwordPath
+nmap <silent> <leader>T <Plug>CtrlSFPrompt
 
 " Toggle CtrlSF result display
-map † :CtrlSFToggle<CR>
+" map † :CtrlSFToggle<CR>
+map <silent> <leader>t :CtrlSFToggle<CR>
 
 let g:ctrlsf_indent = 2
 
@@ -439,3 +484,16 @@ let g:hardtime_showmsg = 1
 " let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_allow_different_key = 1
+
+
+""""""""""""""""""""""""""""""
+" Codi
+""""""""""""""""""""""""""""""
+let g:codi#aliases = {
+                   \ 'javascript.jsx': 'javascript',
+                   \ }
+" let g:codi#interpreters = {
+"                    \ 'javascript': {
+"                        \ 'rightalign': 0,
+"                        \ },
+"                    \ }

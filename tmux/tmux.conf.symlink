@@ -2,9 +2,6 @@
 # => BASIC SETTINGS
 ##############################
 
-# Fix pbpaste in tmux sessions
-set-option -g default-command "reattach-to-user-namespace -l zsh"
-
 # Unbind default prefix and set it to Ctrl+a cause easier
 unbind C-b
 set -g prefix C-a
@@ -12,7 +9,7 @@ bind C-a send-prefix
 
 # tmux display things in 256 colors
 set -g default-terminal "screen-256color"
-set -g status-utf8 on
+# set -g status-utf8 on
 
 set -g history-limit 20000
 
@@ -29,8 +26,8 @@ set -g visual-activity off
 # Rather than constraining window size to the maximum size of any client
 # connected to the *session*, constrain window size to the maximum size of any
 # client connected to *that window*. Much more reasonable.
-# setw -g aggressive-resize on
-set -g aggressive-resize off
+setw -g aggressive-resize on
+# set -g aggressive-resize off
 
 # make delay shorter
 set -sg escape-time 0
@@ -82,10 +79,7 @@ bind -r L resize-pane -R 5
 # enable mouse support for switching panes/windows
 # NOTE: This breaks selecting/copying text on OSX
 # To select text as expected, hold Option to disable it (iTerm2)
-setw -g mode-mouse on
-set -g mouse-select-pane on
-set -g mouse-resize-pane on
-set -g mouse-select-window on
+set -g mouse on
 
 # maximizing and restoring windows
 unbind Up
@@ -101,8 +95,10 @@ bind Escape copy-mode
 unbind p
 bind p paste-buffer
 # Setup 'v' to begin selection as in Vim
-bind-key -t vi-copy v begin-selection
-bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+# OLD bind-key -t vi-copy v begin-selection
+# OLD bind-key -t vi-copy y copy-pipe "pbcopy"
+bind-key -T copy-mode-vi v send -X begin-selection
+bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
 
 # Smart pane switching with awareness of vim splits
 # vim-tmux-navigator
@@ -118,8 +114,9 @@ bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
 # => PLUGINS
 ##############################
 set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sessionist'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
+# set -g @plugin 'tmux-plugins/tmux-continuum'
 
 # Initialize TMUX plugin manager
 run '~/.tmux/plugins/tpm/tpm'
