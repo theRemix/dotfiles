@@ -43,6 +43,8 @@ setw -g pane-base-index 1
 # Don't rename my windows
 set-option -g allow-rename off
 
+# 12-hour clock mode
+set-window-option -g clock-mode-style 12
 
 ##############################
 # => KEY BINDINGS
