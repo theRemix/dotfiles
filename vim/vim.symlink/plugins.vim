@@ -26,7 +26,12 @@ Plug 'prettier/vim-prettier', {
 
 " Code completion
 " BROKEN!
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+
+" Code completion
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 
 " Tab completing
 " Plug 'ajh17/VimCompletesMe'
@@ -61,7 +66,10 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'honza/vim-snippets'
 
 " Syntax checking
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+
+" Linter
+Plug 'w0rp/ale'
 
 " Cache file automatically
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -347,8 +355,9 @@ map <C-d> :NERDTreeToggle<CR>
 """"""""""""""""""""""""""""""
 " Ultisnips
 """"""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger="<C-Space>"
-let g:UltiSnipsJumpForwardTrigger="<Tab>"
+" let g:UltiSnipsExpandTrigger="<C-Space>"
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 
 """"""""""""""""""""""""""""""
@@ -386,6 +395,13 @@ let g:airline#extensions#default#section_truncate_width = {
 
 " nmap <leader>p <Plug>yankstack_substitute_older_paste
 " nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+
+""""""""""""""""""""""""""""""
+" deoplete
+""""""""""""""""""""""""""""""
+
+let g:deoplete#enable_at_startup = 1
 
 
 """"""""""""""""""""""""""""""
