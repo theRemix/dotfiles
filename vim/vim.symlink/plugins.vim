@@ -221,6 +221,15 @@ Plug 'Matt-Deacalion/vim-systemd-syntax'
 " Vue syntax
 Plug 'posva/vim-vue'
 
+" Abolish
+Plug 'tpope/vim-abolish'
+
+" Clojure
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-clojure-highlight'
+Plug 'venantius/vim-cljfmt'
+Plug 'tpope/vim-fireplace'
+
 call plug#end()
 
 
@@ -228,6 +237,12 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " => PLUGIN SPECIFC CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""
+" vim-clojure-static plugin
+""""""""""""""""""""""""""""""
+syntax on
+filetype plugin indent on
 
 """"""""""""""""""""""""""""""
 " bufExplorer plugin
